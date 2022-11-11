@@ -7,5 +7,8 @@ kumuluzee:
     http:
       port: 8080
   datasources:
-    - jndi-name: jdbc/ItemDS
+    - jndi-name: jdbc/MailDS
       max-pool-size: 20
+      connection-url: jdbc:postgresql://localhost:5432/mails-db
+      username: dbuser
+      password: postgres

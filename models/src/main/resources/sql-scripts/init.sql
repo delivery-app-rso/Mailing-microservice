@@ -1,1 +1,1 @@
-INSERT INTO items(name, description, image) VALUES('test item', 'lorem ipsum', 'image url');
+INSERT INTO mails(sender, recipient, body, subject) VALUES('sad', 'asdasd', 'asd', 'dwdw');

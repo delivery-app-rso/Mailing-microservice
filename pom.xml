@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>si.fri.rso</groupId>
-    <artifactId>items-microservice</artifactId>
+    <artifactId>mailing-microservice</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <packaging>pom</packaging>
@@ -153,28 +153,34 @@
             </dependency>
 
             <dependency>
+                <groupId>javax.mail</groupId>
+                <artifactId>mail</artifactId>
+                <version>1.5.0-b01</version>
+            </dependency>
+
+            <dependency>
                 <groupId>si.fri.rso</groupId>
-                <artifactId>items-microservice-api</artifactId>
+                <artifactId>mailing-microservice-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso</groupId>
-                <artifactId>items-microservice-models</artifactId>
+                <artifactId>mailing-microservice-models</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso</groupId>
-                <artifactId>items-microservice-services</artifactId>
+                <artifactId>mailing-microservice-services</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso</groupId>
-                <artifactId>items-microservice-lib</artifactId>
+                <artifactId>mailing-microservice-lib</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>si.fri.rso</groupId>
-                <artifactId>items-microservice-tests</artifactId>
+                <artifactId>mailing-microservice-tests</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>
