@@ -66,4 +66,8 @@ public class AttachmentEntity {
         this.mail = mail;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

@@ -18,8 +18,6 @@ public class MailConverter {
             attachements.add(AttachmentConverter.toDto(ent));
         }
 
-        System.out.println(attachements.size());
-
         dto.setId(entity.getId());
         dto.setAttachements(attachements);
         dto.setSender(entity.getSender());

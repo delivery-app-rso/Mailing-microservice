@@ -1,5 +1,6 @@
 package si.fri.rso.mailingmicroservice.models.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,15 @@ public class MailEntity {
     }
 
     public void addAttachement(AttachmentEntity attachement) {
+        if(this.attachements == null) {
+            this.attachements = new ArrayList<>();
+        }
+
         this.attachements.add(attachement);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }

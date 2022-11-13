@@ -1,6 +1,7 @@
 package si.fri.rso.mailingmicroservice.services.mailing;
 
 import si.fri.rso.mailingmicroservice.lib.Mail;
+import si.fri.rso.mailingmicroservice.models.entities.MailEntity;
 import si.fri.rso.mailingmicroservice.services.templates.TemplateEngine;
 
 import javax.enterprise.context.RequestScoped;
@@ -44,8 +45,8 @@ public class SendEmail {
         this.session = Session.getInstance(prop);
     }
 
-    public Mail generateMail(HashMap<String, String> mailData) {
-        Mail mail = new Mail();
+    public MailEntity generateMail(HashMap<String, String> mailData) {
+        MailEntity mail = new MailEntity();
 
         mail.setBody(mailData.get("body"));
         mail.setRecipient(mailData.get("recipient"));
@@ -56,7 +57,7 @@ public class SendEmail {
     }
 
     public String getTemplateData(String templateName, Map<String, String> dataModel) {
-        return this.templateEngine.getTemplateHTML("registration_success.html", dataModel);
+        return this.templateEngine.getTemplateHTML(templateName, dataModel);
     }
 
     public void send(Mail mail) {

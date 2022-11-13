@@ -4,6 +4,7 @@ import si.fri.rso.mailingmicroservice.lib.Attachement;
 import si.fri.rso.mailingmicroservice.models.entities.AttachmentEntity;
 
 public class AttachmentConverter {
+
     public static Attachement toDto(AttachmentEntity entity) {
 
         Attachement dto = new Attachement();
@@ -17,10 +18,8 @@ public class AttachmentConverter {
     }
 
     public static AttachmentEntity toEntity(Attachement dto) {
-
         AttachmentEntity entity = new AttachmentEntity();
         entity.setId(dto.getId());
-        entity.setMail(MailConverter.toEntity(dto.getMail()));
         entity.setTitle(dto.getTitle());
         entity.setType(dto.getType());
         entity.setCreatedAt(dto.getCreatedAt());

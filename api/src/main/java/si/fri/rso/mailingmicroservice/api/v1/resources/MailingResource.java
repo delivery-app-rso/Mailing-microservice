@@ -36,13 +36,18 @@ public class MailingResource {
         private MailingBean mailingBean;
 
         @Operation(description = "Get all mail items.", summary = "Get all items")
+        @APIResponses({
+                @APIResponse(responseCode = "200", description = "List of mails", content = @Content(schema = @Schema(implementation = Mail.class, type = SchemaType.ARRAY)), headers = {
+                        @Header(name = "X-Total-Count", description = "Number of objects in list") }) })
         @GET
         public Response getMails() {
                 List<Mail> mail = this.mailingBean.getMails();
-                System.out.println(mail.size());
                 return Response.status(Response.Status.OK).entity(mail).build();
         }
 
+        @APIResponses({
+                @APIResponse(responseCode = "200", description = "List of attachments", content = @Content(schema = @Schema(implementation = Attachement.class, type = SchemaType.ARRAY)), headers = {
+                        @Header(name = "X-Total-Count", description = "Number of objects in list") }) })
         @GET
         @Path("attachments")
         public Response getAttachments() {
@@ -50,7 +55,11 @@ public class MailingResource {
                 return Response.status(Response.Status.OK).entity(attachements).build();
         }
 
-        @Operation(description = "Get all items.", summary = "Get all items")
+        @Operation(description = "Send mail and store it in DB.", summary = "Send mail")
+        @APIResponses({
+                @APIResponse(responseCode = "201", description = "Mail successfully added."),
+                @APIResponse(responseCode = "405", description = "Validation error .")
+        })
         @POST
         public Response sendMail() {
                 Mail mail = this.mailingBean.sendEmail();

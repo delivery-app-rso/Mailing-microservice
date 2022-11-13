@@ -17,6 +17,7 @@ import javax.ws.rs.core.UriInfo;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -55,24 +56,29 @@ public class MailingBean {
         attachmentEntity.setTitle("Testuser-invoice.pdf");
         attachmentEntity.setType("Invoice");
 
+        this.persistEntity(attachmentEntity);
+
         return attachmentEntity;
     }
 
     public Mail sendEmail() {
-        log.log(Level.INFO, "Sending email to tesd@gmail.com");
+        Map<String, String> dataModel = new HashMap<>();
+        dataModel.put("user", "Test user");
+        String mailBody = this.sendEmail.getTemplateData("invoice.html", dataModel);
 
         HashMap<String, String> mailData = new HashMap<>();
-        mailData.put("subject", "test subject");
+        mailData.put("subject", "Test");
         mailData.put("recipient", "testemail@gmail.com");
-        mailData.put("body", this.sendEmail.getTemplateData("registration_success.html", null));
+        mailData.put("body", mailBody);
 
-        Mail mail = this.sendEmail.generateMail(mailData);
-        mail.ad;
+        MailEntity mail = this.sendEmail.generateMail(mailData);
+        mail.addAttachement(this.createAttachement());
+        this.persistEntity(mail);
 
-        this.persistEntity(MailConverter.toEntity(mail));
-        this.sendEmail.send(mail);
+        this.sendEmail.send(MailConverter.toDto(mail));
 
-        return mail;
+        log.log(Level.INFO, "Sending email to " + mail.getRecipient());
+        return MailConverter.toDto(mail);
     }
 
     private <T> void persistEntity(T entity) {
@@ -80,8 +86,10 @@ public class MailingBean {
             beginTx();
             em.persist(entity);
             commitTx();
+            log.log(Level.INFO, "Persisted " + entity.toString());
         } catch (Exception e) {
             rollbackTx();
+            log.log(Level.INFO, "Failed to persist entity. Rolling back.");
         }
     }
 
