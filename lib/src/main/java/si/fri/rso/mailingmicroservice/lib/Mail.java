@@ -1,7 +1,12 @@
 package si.fri.rso.mailingmicroservice.lib;
 
+import java.util.Date;
+import java.util.List;
+
 public class Mail {
     private Integer id;
+
+    private List<Attachement> attachements;
 
     private String sender;
 
@@ -10,6 +15,8 @@ public class Mail {
     private String subject;
 
     private String body;
+
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -50,4 +57,21 @@ public class Mail {
     public void setBody(String body) {
         this.body = body;
     }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<Attachement> getAttachements() {
+        return attachements;
+    }
+
+    public void setAttachements(List<Attachement> attachements) {
+        this.attachements = attachements;
+    }
+
 }

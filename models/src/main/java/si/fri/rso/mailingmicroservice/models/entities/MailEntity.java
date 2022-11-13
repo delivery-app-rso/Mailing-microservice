@@ -1,5 +1,8 @@
 package si.fri.rso.mailingmicroservice.models.entities;
 
+import java.util.Date;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +16,9 @@ public class MailEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @OneToMany(mappedBy = "mail")
+    private List<AttachmentEntity> attachements;
+
     @Column(name = "sender")
     private String sender;
 
@@ -25,6 +31,8 @@ public class MailEntity {
     @Column(name = "body")
     private String body;
 
+    @Column(name = "createdAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    private Date createdAt;
 
     public Integer getId() {
         return id;
@@ -64,5 +72,25 @@ public class MailEntity {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public List<AttachmentEntity> getAttachements() {
+        return attachements;
+    }
+
+    public void setAttachements(List<AttachmentEntity> attachements) {
+        this.attachements = attachements;
+    }
+
+    public void addAttachement(AttachmentEntity attachement) {
+        this.attachements.add(attachement);
     }
 }

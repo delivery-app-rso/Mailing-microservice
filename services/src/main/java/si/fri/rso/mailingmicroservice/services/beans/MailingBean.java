@@ -1,7 +1,10 @@
 package si.fri.rso.mailingmicroservice.services.beans;
 
+import si.fri.rso.mailingmicroservice.lib.Attachement;
 import si.fri.rso.mailingmicroservice.lib.Mail;
+import si.fri.rso.mailingmicroservice.models.converters.AttachmentConverter;
 import si.fri.rso.mailingmicroservice.models.converters.MailConverter;
+import si.fri.rso.mailingmicroservice.models.entities.AttachmentEntity;
 import si.fri.rso.mailingmicroservice.models.entities.MailEntity;
 import si.fri.rso.mailingmicroservice.services.mailing.SendEmail;
 
@@ -11,6 +14,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
+
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,38 +42,47 @@ public class MailingBean {
         return resultList.stream().map(MailConverter::toDto).collect(Collectors.toList());
     }
 
+    public List<Attachement> getAttachements() {
+        TypedQuery<AttachmentEntity> query = em.createNamedQuery(
+                "AttachmentEntity.getAll", AttachmentEntity.class);
+
+        List<AttachmentEntity> resultList = query.getResultList();
+        return resultList.stream().map(AttachmentConverter::toDto).collect(Collectors.toList());
+    }
+
+    public AttachmentEntity createAttachement() {
+        AttachmentEntity attachmentEntity = new AttachmentEntity();
+        attachmentEntity.setTitle("Testuser-invoice.pdf");
+        attachmentEntity.setType("Invoice");
+
+        return attachmentEntity;
+    }
+
     public Mail sendEmail() {
         log.log(Level.INFO, "Sending email to tesd@gmail.com");
-        
-        Mail mail = new Mail();
-        mail.setBody("test email");
-        mail.setRecipient("test@recipient.com");
-        mail.setSender("test@sender.com");
-        mail.setSubject("test subject from sender!");
-        
-        this.createMail(mail);
-        
+
+        HashMap<String, String> mailData = new HashMap<>();
+        mailData.put("subject", "test subject");
+        mailData.put("recipient", "testemail@gmail.com");
+        mailData.put("body", this.sendEmail.getTemplateData("registration_success.html", null));
+
+        Mail mail = this.sendEmail.generateMail(mailData);
+        mail.ad;
+
+        this.persistEntity(MailConverter.toEntity(mail));
         this.sendEmail.send(mail);
+
         return mail;
     }
 
-    private Mail createMail(Mail mail) {
-        MailEntity mailEntity = MailConverter.toEntity(mail);
-
+    private <T> void persistEntity(T entity) {
         try {
             beginTx();
-            em.persist(mailEntity);
+            em.persist(entity);
             commitTx();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             rollbackTx();
         }
-
-        if (mailEntity.getId() == null) {
-            throw new RuntimeException("Mail Entity was not persisted");
-        }
-
-        return mail;
     }
 
     private void beginTx() {

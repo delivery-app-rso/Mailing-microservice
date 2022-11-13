@@ -9,6 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+
+import si.fri.rso.mailingmicroservice.lib.Attachement;
 import si.fri.rso.mailingmicroservice.lib.Mail;
 import si.fri.rso.mailingmicroservice.services.beans.MailingBean;
 
@@ -37,7 +39,15 @@ public class MailingResource {
         @GET
         public Response getMails() {
                 List<Mail> mail = this.mailingBean.getMails();
+                System.out.println(mail.size());
                 return Response.status(Response.Status.OK).entity(mail).build();
+        }
+
+        @GET
+        @Path("attachments")
+        public Response getAttachments() {
+                List<Attachement> attachements = this.mailingBean.getAttachements();
+                return Response.status(Response.Status.OK).entity(attachements).build();
         }
 
         @Operation(description = "Get all items.", summary = "Get all items")
