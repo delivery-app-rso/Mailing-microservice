@@ -56,7 +56,7 @@ public class TemplateEngine {
             template.process(dataModel, out);
             out.close();
 
-            return this.compressHTMLString(new String(outStream.toByteArray()));
+            return this.compressHTMLString(outStream.toString());
         } catch (IOException | TemplateException e) {
             e.printStackTrace();
         }

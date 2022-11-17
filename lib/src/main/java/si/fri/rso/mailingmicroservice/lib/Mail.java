@@ -1,12 +1,13 @@
 package si.fri.rso.mailingmicroservice.lib;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Mail {
     private Integer id;
 
-    private List<Attachement> attachements;
+    private List<Attachment> attachments = new ArrayList<>();
 
     private String sender;
 
@@ -66,12 +67,19 @@ public class Mail {
         this.createdAt = createdAt;
     }
 
-    public List<Attachement> getAttachements() {
-        return attachements;
+    public List<Attachment> getAttachements() {
+        return attachments;
     }
 
-    public void setAttachements(List<Attachement> attachements) {
-        this.attachements = attachements;
+    public void setAttachements(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
+    public void addAttachement(Attachment attachment) {
+        if(this.attachments == null) {
+            this.attachments = new ArrayList<>();
+        }
+
+        this.attachments.add(attachment);
+    }
 }

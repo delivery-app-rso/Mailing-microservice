@@ -13,7 +13,7 @@ public class AttachmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "mail_id")
     private MailEntity mail;
 
@@ -66,4 +66,8 @@ public class AttachmentEntity {
         this.mail = mail;
     }
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

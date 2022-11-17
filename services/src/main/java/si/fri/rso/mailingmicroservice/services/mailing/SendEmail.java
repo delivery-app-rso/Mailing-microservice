@@ -1,7 +1,7 @@
 package si.fri.rso.mailingmicroservice.services.mailing;
 
+import si.fri.rso.mailingmicroservice.lib.Attachment;
 import si.fri.rso.mailingmicroservice.lib.Mail;
-import si.fri.rso.mailingmicroservice.services.templates.TemplateEngine;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -16,21 +16,18 @@ import javax.mail.internet.MimeMultipart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
+
+import java.util.logging.Logger;
 
 @RequestScoped
 public class SendEmail {
     private final Session session;
-    private final String sender;
 
-    @Inject
-    TemplateEngine templateEngine;
+    private Logger log = Logger.getLogger(SendEmail.class.getName());
 
     public SendEmail() {
+        // TODO: Read from config server
         Dotenv dotenv = Dotenv.load();
         Properties prop = new Properties();
 
@@ -40,23 +37,7 @@ public class SendEmail {
         prop.put("mail.smtp.port", dotenv.get("SMTP_PORT"));
         prop.put("mail.smtp.ssl.trust", dotenv.get("SMTP_HOST"));
 
-        this.sender = dotenv.get("SMTP_SENDER_EMAIL");
         this.session = Session.getInstance(prop);
-    }
-
-    public Mail generateMail(HashMap<String, String> mailData) {
-        Mail mail = new Mail();
-
-        mail.setBody(mailData.get("body"));
-        mail.setRecipient(mailData.get("recipient"));
-        mail.setSender(this.sender);
-        mail.setSubject(mailData.get("subject"));
-
-        return mail;
-    }
-
-    public String getTemplateData(String templateName, Map<String, String> dataModel) {
-        return this.templateEngine.getTemplateHTML("registration_success.html", dataModel);
     }
 
     public void send(Mail mail) {
@@ -71,6 +52,13 @@ public class SendEmail {
 
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(mimeBodyPartWithStyledText);
+
+            /* TODO: Get PDF in base64 from invoice microservice and convert it to an image and set as an attachment
+            for(Attachment attachment : mail.getAttachements()) {
+                MimeBodyPart mailAttachment = new MimeBodyPart();
+                mailAttachment.attachFile();
+            }
+            */
 
             message.setContent(multipart);
 
