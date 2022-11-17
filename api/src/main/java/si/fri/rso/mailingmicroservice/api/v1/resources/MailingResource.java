@@ -6,21 +6,19 @@ import org.eclipse.microprofile.openapi.annotations.headers.Header;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
 
-import si.fri.rso.mailingmicroservice.lib.Attachement;
+import si.fri.rso.mailingmicroservice.lib.Attachment;
 import si.fri.rso.mailingmicroservice.lib.Mail;
+import si.fri.rso.mailingmicroservice.lib.MailingDto;
 import si.fri.rso.mailingmicroservice.services.beans.MailingBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -46,13 +44,13 @@ public class MailingResource {
         }
 
         @APIResponses({
-                @APIResponse(responseCode = "200", description = "List of attachments", content = @Content(schema = @Schema(implementation = Attachement.class, type = SchemaType.ARRAY)), headers = {
+                @APIResponse(responseCode = "200", description = "List of attachments", content = @Content(schema = @Schema(implementation = Attachment.class, type = SchemaType.ARRAY)), headers = {
                         @Header(name = "X-Total-Count", description = "Number of objects in list") }) })
         @GET
         @Path("attachments")
         public Response getAttachments() {
-                List<Attachement> attachements = this.mailingBean.getAttachements();
-                return Response.status(Response.Status.OK).entity(attachements).build();
+                List<Attachment> attachments = this.mailingBean.getAttachements();
+                return Response.status(Response.Status.OK).entity(attachments).build();
         }
 
         @Operation(description = "Send mail and store it in DB.", summary = "Send mail")
@@ -61,8 +59,13 @@ public class MailingResource {
                 @APIResponse(responseCode = "405", description = "Validation error .")
         })
         @POST
-        public Response sendMail() {
-                Mail mail = this.mailingBean.sendEmail();
+        public Response sendMail(MailingDto mailingDto) {
+                // TODO: Add userId check
+                if(mailingDto.getType() == null) {
+                        return Response.status(Response.Status.BAD_REQUEST).build();
+                }
+
+                Mail mail = this.mailingBean.sendEmail(mailingDto);
                 return Response.status(Response.Status.OK).entity(mail).build();
         }
 }

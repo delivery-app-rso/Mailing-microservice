@@ -17,8 +17,8 @@ public class MailEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "mail")
-    private List<AttachmentEntity> attachements;
+    @OneToMany(mappedBy = "mail", cascade = CascadeType.PERSIST)
+    private List<AttachmentEntity> attachements = new ArrayList<>();
 
     @Column(name = "sender")
     private String sender;
@@ -29,7 +29,7 @@ public class MailEntity {
     @Column(name = "subject")
     private String subject;
 
-    @Column(name = "body")
+    @Column(name = "body", columnDefinition = "TEXT")
     private String body;
 
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

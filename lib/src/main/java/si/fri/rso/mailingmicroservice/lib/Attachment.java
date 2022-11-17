@@ -2,7 +2,7 @@ package si.fri.rso.mailingmicroservice.lib;
 
 import java.util.Date;
 
-public class Attachement {
+public class Attachment {
     private Integer id;
 
     private Mail mail;
