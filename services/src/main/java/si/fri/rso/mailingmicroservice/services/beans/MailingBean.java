@@ -7,16 +7,15 @@ import si.fri.rso.mailingmicroservice.models.converters.AttachmentConverter;
 import si.fri.rso.mailingmicroservice.models.converters.MailConverter;
 import si.fri.rso.mailingmicroservice.models.entities.AttachmentEntity;
 import si.fri.rso.mailingmicroservice.models.entities.MailEntity;
+import si.fri.rso.mailingmicroservice.services.config.MinioProperties;
 import si.fri.rso.mailingmicroservice.services.mailing.EmailFactory;
 import si.fri.rso.mailingmicroservice.services.mailing.SendEmail;
 import si.fri.rso.mailingmicroservice.services.mailing.emails.Email;
-import si.fri.rso.mailingmicroservice.services.templates.TemplateEngine;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.core.UriInfo;
 
 import java.util.List;
 import java.util.logging.Level;
