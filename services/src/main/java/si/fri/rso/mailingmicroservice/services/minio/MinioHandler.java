@@ -29,7 +29,7 @@ public class MinioHandler {
     public InputStream getInvoiceFromStorage(String fileName) {
         try {
             return this.minioClient.getObject(GetObjectArgs.builder()
-                    .bucket("invoices")
+                    .bucket(this.minioProperties.getInvoicesBucket())
                     .object(fileName).build());
         } catch (Exception e) {
             e.printStackTrace();

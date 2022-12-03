@@ -7,5 +7,6 @@ FROM eclipse-temurin:18-jre
 RUN mkdir /app
 WORKDIR /app
 COPY --from=build ./app/api/target/mailing-microservice-api-1.0.0-SNAPSHOT.jar /app
+COPY --from=build ./app/services/src/main/resources/templates/ /app/templates
 EXPOSE 8080
 CMD ["java", "-jar", "mailing-microservice-api-1.0.0-SNAPSHOT.jar"]

@@ -81,7 +81,7 @@ public class SendEmail {
 
             for (Attachment attachment : mail.getAttachements()) {
                 MimeBodyPart mailAttachment = new MimeBodyPart();
-                String attachmentFile = attachment.getTitle() + ".pdf";
+                String attachmentFile = "invoice-2.pdf"; //TODO: Change magic value
 
                 mailAttachment.setDataHandler(new DataHandler(this.getInvoiceDataSource(attachmentFile)));
                 mailAttachment.setFileName(attachmentFile);
