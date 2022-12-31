@@ -9,6 +9,7 @@ public class RegistrationEmail extends Email {
 
     public RegistrationEmail(TemplateEngine templateEngine) {
         super(templateEngine);
+        this.generateEmail();
     }
 
     @Override
@@ -17,10 +18,9 @@ public class RegistrationEmail extends Email {
         Map<String, String> dataModel = new HashMap<>();
         dataModel.put("user", "Test User");
         dataModel.put("link", "http://127.0.0.1");
-        this.log.info("here i am");
 
         String mailBody = this.templateEngine.getTemplateHTML(this.getEmailTemplateName() + ".html", dataModel);
-        this.email = this.generateMail("Test subject", "testuser@gmail.com", mailBody);
+        this.email = this.generateMail("Registration successfull", "testuser@gmail.com", mailBody);
     }
 
     @Override

@@ -12,7 +12,7 @@ services:
       - KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://${DB_HOST}:5432/${DB_NAME}
       - KUMULUZEE_CONFIG_CONSUL_AGENT=${CONSUL_URL}
     ports:
-      - "127.0.0.1:${LOCAL_PORT}:8080"
+      - ${LOCAL_PORT}:8080
 
   mailhog:
     image: mailhog/mailhog
@@ -22,8 +22,5 @@ services:
 
 networks:
   default:
-    name: local.rso.com
-    ipam:
-      driver: default
-      config:
-        - subnet: 10.100.1.0/24
+    name: rso
+    external: true

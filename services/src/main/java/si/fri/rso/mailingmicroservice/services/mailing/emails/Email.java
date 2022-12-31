@@ -4,6 +4,11 @@ import si.fri.rso.mailingmicroservice.lib.Mail;
 import si.fri.rso.mailingmicroservice.services.templates.TemplateEngine;
 
 import javax.inject.Inject;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class Email {
@@ -16,7 +21,6 @@ public abstract class Email {
 
     public Email(TemplateEngine templateEngine) {
         this.templateEngine = templateEngine;
-        this.generateEmail();
     }
 
     protected Mail generateMail(String subject, String recipient, String body) {
@@ -24,7 +28,7 @@ public abstract class Email {
 
         mail.setBody(body);
         mail.setRecipient(recipient);
-        mail.setSender("deliverio@gmail.com");  //TODO: Remove magic string with configuration property
+        mail.setSender("deliverio@gmail.com"); // TODO: Remove magic string with configuration property
         mail.setSubject(subject);
 
         return mail;

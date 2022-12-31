@@ -1,2 +1,2 @@
-INSERT INTO mails(sender, recipient, body, subject, createdAt) VALUES('test@sender.com', 'test@recipient.com', '<p>test</p>', 'Test subject', '2020-02-02');
-INSERT INTO attachments(title, type, mail_id, createdAt) VALUES('invoice', 'pdf', 1, '2020-02-02');
+INSERT INTO mails(sender, recipient, body, subject) VALUES('test@sender.com', 'test@recipient.com', '<p>test</p>', 'Test subject');
+INSERT INTO attachments(title, type, mail_id) VALUES('invoice', 'pdf', 1);

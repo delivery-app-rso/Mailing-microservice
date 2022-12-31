@@ -20,8 +20,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
-import io.minio.MinioClient;
-
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -80,8 +78,9 @@ public class SendEmail {
             multipart.addBodyPart(mimeBodyPartWithStyledText);
 
             for (Attachment attachment : mail.getAttachements()) {
+                System.out.println("Invoice title: " + attachment.getTitle());
                 MimeBodyPart mailAttachment = new MimeBodyPart();
-                String attachmentFile = "invoice-2.pdf"; //TODO: Change magic value
+                String attachmentFile = attachment.getTitle() + ".pdf";
 
                 mailAttachment.setDataHandler(new DataHandler(this.getInvoiceDataSource(attachmentFile)));
                 mailAttachment.setFileName(attachmentFile);
@@ -95,4 +94,5 @@ public class SendEmail {
             e.printStackTrace();
         }
     }
+
 }

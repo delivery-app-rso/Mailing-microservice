@@ -7,7 +7,6 @@ import si.fri.rso.mailingmicroservice.models.converters.AttachmentConverter;
 import si.fri.rso.mailingmicroservice.models.converters.MailConverter;
 import si.fri.rso.mailingmicroservice.models.entities.AttachmentEntity;
 import si.fri.rso.mailingmicroservice.models.entities.MailEntity;
-import si.fri.rso.mailingmicroservice.services.config.MinioProperties;
 import si.fri.rso.mailingmicroservice.services.mailing.EmailFactory;
 import si.fri.rso.mailingmicroservice.services.mailing.SendEmail;
 import si.fri.rso.mailingmicroservice.services.mailing.emails.Email;
@@ -16,6 +15,9 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+
+import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.json.JSONObject;
 
 import java.util.List;
 import java.util.logging.Level;
@@ -51,8 +53,9 @@ public class MailingBean {
         return resultList.stream().map(AttachmentConverter::toDto).collect(Collectors.toList());
     }
 
+    @Timed
     public Mail sendEmail(MailingDto mailingDto) {
-        Email email = this.emailFactory.createEmail(mailingDto.getType());
+        Email email = this.emailFactory.createEmail(mailingDto);
         this.persistEntity(MailConverter.toEntity(email.getEmail()));
 
         log.log(Level.INFO, "Sending email to " + email.getEmail().getRecipient());

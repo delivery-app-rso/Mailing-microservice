@@ -27,6 +27,10 @@ public class MinioHandler {
     }
 
     public InputStream getInvoiceFromStorage(String fileName) {
+        System.out.println(fileName);
+        System.out.println(this.minioProperties.getInvoicesBucket());
+        System.out.println(this.minioClient);
+
         try {
             return this.minioClient.getObject(GetObjectArgs.builder()
                     .bucket(this.minioProperties.getInvoicesBucket())

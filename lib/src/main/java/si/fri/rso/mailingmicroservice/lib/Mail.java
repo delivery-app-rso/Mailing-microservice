@@ -76,7 +76,7 @@ public class Mail {
     }
 
     public void addAttachement(Attachment attachment) {
-        if(this.attachments == null) {
+        if (this.attachments == null) {
             this.attachments = new ArrayList<>();
         }
 

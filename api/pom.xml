@@ -35,6 +35,10 @@
             <artifactId>kumuluzee-openapi-mp-ui</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.kumuluz.ee.health</groupId>
+            <artifactId>kumuluzee-health</artifactId>
+        </dependency>
+        <dependency>
             <groupId>si.fri.rso</groupId>
             <artifactId>mailing-microservice-services</artifactId>
         </dependency>
