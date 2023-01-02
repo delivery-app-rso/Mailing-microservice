@@ -1,14 +1,15 @@
 package si.fri.rso.mailingmicroservice.lib;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class MailingDto {
     private String type;
 
-    private Integer userId;
+    private Map<String, String> invoiceData;
 
-    private Map<String, String> invoiceData = new HashMap<>();
+    private Map<String, String> userData;
+
+    private Map<String, String> deliveryData;
 
     public String getType() {
         return type;
@@ -16,14 +17,6 @@ public class MailingDto {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
     }
 
     public Map<String, String> getInvoiceData() {
@@ -34,7 +27,19 @@ public class MailingDto {
         this.invoiceData = invoiceData;
     }
 
-    public Integer getInvoiceId() {
-        return 2;
+    public Map<String, String> getUserData() {
+        return userData;
+    }
+
+    public void setUserData(Map<String, String> userData) {
+        this.userData = userData;
+    }
+
+    public Map<String, String> getDeliveryData() {
+        return deliveryData;
+    }
+
+    public void setDeliveryData(Map<String, String> deliveryData) {
+        this.deliveryData = deliveryData;
     }
 }

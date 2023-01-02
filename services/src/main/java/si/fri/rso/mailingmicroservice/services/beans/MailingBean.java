@@ -64,6 +64,20 @@ public class MailingBean {
         return email.getEmail();
     }
 
+    public boolean emailDataOk(MailingDto mailingDto) {
+        switch (mailingDto.getType()) {
+            case "registration":
+                return mailingDto.getUserData() != null;
+            case "invoice":
+                return mailingDto.getInvoiceData() != null && mailingDto.getUserData() != null;
+            case "delivery_start":
+            case "delivered":
+                return mailingDto.getUserData() != null && mailingDto.getDeliveryData() != null;
+            default:
+                return false;
+        }
+    }
+
     private <T> void persistEntity(T entity) {
         try {
             beginTx();

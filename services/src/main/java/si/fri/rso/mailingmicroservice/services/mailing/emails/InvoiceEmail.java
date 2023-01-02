@@ -1,24 +1,22 @@
 package si.fri.rso.mailingmicroservice.services.mailing.emails;
 
 import si.fri.rso.mailingmicroservice.lib.Attachment;
-import si.fri.rso.mailingmicroservice.lib.MailingDto;
 import si.fri.rso.mailingmicroservice.services.templates.TemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.json.JSONObject;
 
 public class InvoiceEmail extends Email {
-    private JSONObject itemJsonObject;
-
     private Map<String, String> invoiceData;
 
-    public InvoiceEmail(TemplateEngine templateEngine, Map<String, String> invoiceData, JSONObject itemJsonObject) {
+    private Map<String, String> userData;
+
+    public InvoiceEmail(TemplateEngine templateEngine, Map<String, String> invoiceData, Map<String, String> userData) {
         super(templateEngine);
 
-        this.itemJsonObject = itemJsonObject;
+        this.userData = userData;
         this.invoiceData = invoiceData;
 
         this.generateEmail();
@@ -34,15 +32,14 @@ public class InvoiceEmail extends Email {
 
     @Override
     public void generateEmail() {
-        // TODO: Get user ID from query and fetch data from microservices
         Map<String, String> dataModel = new HashMap<>();
-        dataModel.put("user", "Test User");
+        dataModel.put("user", this.userData.get("name"));
         dataModel.put("link", "http://127.0.0.1");
-        dataModel.put("item", this.itemJsonObject.getString("name"));
+        dataModel.put("item", this.invoiceData.get("item"));
         dataModel.put("amount", this.invoiceData.get("amount"));
         String mailBody = this.templateEngine.getTemplateHTML(this.getEmailTemplateName() + ".html", dataModel);
 
-        this.email = this.generateMail("Delivery invoice", "testuser@gmail.com", mailBody);
+        this.email = this.generateMail("Delivery invoice", this.userData.get("email"), mailBody);
         this.email.addAttachement(this.createAttachement());
     }
 
