@@ -19,6 +19,9 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.kumuluz.ee.cors.annotations.CrossOrigin;
+
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,6 +29,7 @@ import java.util.logging.Logger;
 @Path("/mailing")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@CrossOrigin(allowOrigin = "*")
 public class MailingResource {
 
         private Logger log = Logger.getLogger(MailingResource.class.getName());
